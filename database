@@ -147,7 +147,82 @@ CREATE TABLE payment (
 );
 
 
+-- Insert book languages
+INSERT INTO book_language (language_code, language_name) VALUES 
+('en', 'English'),
+('es', 'Spanish'),
+('fr', 'French'),
+('de', 'German'),
+('ja', 'Japanese');
 
+-- Insert publishers
+INSERT INTO publisher (publisher_NAME, publisher_website) VALUES 
+('Penguin Random House', 'www.penguinrandomhouse.com'),
+('HarperCollins', 'www.harpercollins.com'),
+('Simon & Schuster', 'www.simonandschuster.com'),
+('Macmillan', 'www.macmillan.com'),
+('Hachette', 'www.hachette.com');
+
+-- Insert address statuses
+INSERT INTO address_status (status_name) VALUES 
+('Current'),
+('Previous'),
+('Billing'),
+('Shipping');
+
+-- Insert countries
+INSERT INTO country (country_name, country_code) VALUES 
+('United States', 'US'),
+('United Kingdom', 'UK'),
+('Canada', 'CA'),
+('Australia', 'AU'),
+('Germany', 'DE');
+
+-- Insert order statuses
+INSERT INTO order_status (status_description) VALUES 
+('Pending'),
+('Processing'),
+('Shipped'),
+('Delivered'),
+('Cancelled'),
+('Returned');
+
+-- Insert shipping methods
+INSERT INTO shipping_method (method_name) VALUES 
+('Standard Shipping'),
+('Express Shipping'),
+('Overnight Shipping'),
+('International Shipping');
+
+-- Insert payment methods
+INSERT INTO payment_method (method_name) VALUES 
+('Credit Card'),
+('Debit Card'),
+('PayPal'),
+('Bank Transfer'),
+('Cash on Delivery');
+
+
+-- USE bookstores;
+-- Create admin user with full privileges
+CREATE USER 'bookstore_admin'@'localhost' IDENTIFIED BY '123456789';
+GRANT ALL PRIVILEGES ON bookstore.* TO 'bookstore_admin'@'localhost';
+
+-- Create manager user with read/write access
+CREATE USER 'bookstore_manager'@'localhost' IDENTIFIED BY 'ManagerPass456!';
+GRANT SELECT, INSERT, UPDATE, DELETE ON bookstore.* TO 'bookstore_manager'@'localhost';
+
+-- Create staff user with limited access
+CREATE USER 'bookstore_staff'@'localhost' IDENTIFIED BY 'StaffPwd789!';
+GRANT SELECT ON bookstore.* TO 'bookstore_staff'@'localhost';
+GRANT INSERT, UPDATE ON bookstore.cust_order, bookstore.order_line, bookstore.order_history TO 'bookstore_staff'@'localhost';
+
+-- Create customer service user
+CREATE USER 'bookstore_service'@'localhost' IDENTIFIED BY 'ServicePass321!';
+GRANT SELECT ON bookstore.* TO 'bookstore_service'@'localhost';
+GRANT UPDATE ON bookstore.customer, bookstore.customer_address TO 'bookstore_service'@'localhost';
+
+FLUSH PRIVILEGES;
 
 
 
